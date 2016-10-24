@@ -1,0 +1,30 @@
+/*background color*/
+.bck-grs{
+	background-color: #ccccb3;
+}
+/*Color texto*/
+*{
+	color: black;
+}
+li{
+	list-style:none;
+}
+/*Margin y padding*/
+.mg-l{
+	margin-left: 10%;
+}
+/*Medidas*/
+textarea{
+	width: 100%;
+}
+
+@media (min-width: 400px) and (max-width: 550px){
+	h1{
+		font-size: 85%;
+	}
+}
+@media (min-width: 550px) and (max-width: 650px){
+	h1{
+		font-size: 87%;
+	}
+}
