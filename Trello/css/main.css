@@ -1,11 +1,121 @@
-
-li{
-	list-style:none;
-}
 *{
-	color: black;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  color: black;
 }
-.row{
-	background-color: black;
-	opacity: 0.4;
+
+body{
+   background:rgb(173, 173, 133);
+}
+.yg{
+    margin-left: 26%;
+}
+
+#lista{
+  display: inline-block;
+  float: left;
+  border-radius: 5px;
+  background-color: #E2E4E6;
+  margin-top: 2%;
+  margin-left: 1%;
+  padding: 7px;
+  width: 265px;
+}
+.container-fluid{
+  padding-top: 3%;
+}
+
+.lsta {
+  padding: 7px;
+  width: 270px;
+}
+
+#nuevaLista{
+  width: 250px;
+  height: 30px;
+  padding: 4px;
+  border-radius: 5px;
+}
+
+#nuevaLista:hover{
+  background-color: rgba(204, 204, 179);
+  cursor: pointer;
+}
+
+#formulario{
+  background-color:#E2E4E6;
+  width: 250px;
+  padding: 8px;
+  border-radius: 5px;
+  display: none;
+}
+
+#inputLista{
+  border-color: #aaa;
+  border-radius: 3px;
+  border:1px solid #cdd2d4;
+  padding: 5px;
+  width: 100%;
+}
+
+#guardar{
+  background-color: #aaa;
+  font-weight: bold;
+  color: white;
+  border: none;
+  padding: 5px;
+  margin: 1px;
+  margin-top: 7px;
+  border-radius: 3px;
+  cursor: pointer;
+  display: block;
+}
+
+.nuevalsta{
+  width: 250px;
+  font-weight: bold;
+  padding: 9px;
+  border-radius: 5px;
+  white-space: pre-line;
+  word-break: break-word;
+}
+
+.nuevocampo{
+  display: inline-block;
+  vertical-align: top;
+  border-radius: 5px;
+  margin-left: 1%;
+  margin-top: 2%;
+}
+
+.card{
+  width: 100%;
+}
+
+.textarea{
+  resize: none;
+  width: 100%;
+  height: 80px;
+  border-radius: 4px;
+
+}
+
+.boton{
+  display: block;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+.tarjeta1{
+  border-radius: 5px;
+  margin: 8px 0;
+  padding: 4px;
+  white-space: pre-line;
+  word-break: break-word;
+}
+
+.tarjeta2{
+  border-radius: 5px;
+  border:1px solid black;
 }
