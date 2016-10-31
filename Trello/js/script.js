@@ -1,140 +1,115 @@
+window.addEventListener("load", function() {
+	var contenedoTarjeta = document.getElementById("contenedoTarjeta");
+	var lista = document.getElementById("lista");
+	var listaNueva = document.getElementById("listaNueva");
+	var formulario = document.getElementById("formulario");
+	var inputed = document.getElementById("inputed");
+	var boton = document.getElementById("boton");
+	var i =1;
 
-//variables universales.
-var primeraCaja = document.createElement("div");
-var tarjeta = document.createElement("textarea");
-var inputBoton = document.createElement('input');
-var boton = document.createElement("button");
-var renglon = document.createElement('div');
-var titulo = document.createElement('h2');
-var primario = document.createElement('li');
+	listaNueva.addEventListener("click", function(e){
+		e.preventDefault();
+  		listaNueva.style.display = "none";
+        activarCampo();
+  		inputed.focus();
+  		lista.classList.add("lsta");
+	});
 
+	boton.addEventListener("click", function(){
+		formulario.style.display = "none";
+		agregarMensaje(inputed, this);
+		insertarContenedor();
+		inputed.value = "";
 
-//función para el input
-function hacerInput(){
+		lista.addEventListener("drop", soltar);
+		lista.addEventListener("dragover", arrastrarSobre);
+		lista.addEventListener("dragleave", dejaArrastrar);
+	});
 
-	inputBoton.setAttribute('type', 'input');
-	var contenido = document.createElement('li');
-	contenido.appendChild(inputBoton);
-	document.body.appendChild(contenido);
-
-}
-hacerInput();
-
-//Función crear del botón
-function hacerBoton(){
-	boton.setAttribute("class", "btn");
-	boton.appendChild(document.createTextNode("Guardar"));
-}
-
-//Función para poner el botón
-function ponerBoton(){
-	document.body.appendChild(boton);
-}
-
-//Función primera tarjeta.
-function tarjetaTrello (){
-
-	if ( inputBoton.value === "" ||  inputBoton.value === null) {
-		alert("No se agrego nada");
-	} else{
-		//Aquí se le da la clase renglón al div
-		renglon.setAttribute('class', 'row');
-		//Aquí el div se convierte en hijo de lista
-		titulo.appendChild(renglon);
-		//Aquí se crea el texto como hijo de lista
-		titulo.appendChild(document.createTextNode(inputBoton.value));
-		//Aquí se da ubicación de lista
-		document.body.appendChild(titulo);
+	function activarCampo(){
+	     formulario.style.display = "block";
 	}
-}	
-
-
-
-function hacerTablero(){
-	//Aquí se crea el texto que formara una lista
-
-	//Aquí el div se convierte en hijo de lista
-	primario.appendChild(renglon);
-	//Aquí se crea el texto como hijo de lista
-	primario.appendChild(document.createTextNode(inputBoton.value));
-	//Aquí se da ubicación de lista
-	document.body.appendChild(primario);
-	//Función hacer un bote de basurita
-	//crear bote de basura	
-
-}
-
-
-
-
-function crearsegundoTrash(){
-	var buttonSecondGliphy = document.createElement("button");
-	var spanButtonSecondGliphy = document.createElement("span");
-	spanButtonSecondGliphy.setAttribute("class", "fa fa-trash-o");
-	buttonSecondGliphy.appendChild(spanButtonSecondGliphy);
-	titulo.appendChild(buttonSecondGliphy);
-	document.body.appendChild(titulo);
-
-
-	//función remover elemento con bote de basura
-	function pulseSecondTrashBox(){
-		titulo.parentNode.removeChild(titulo);
-	}
-	buttonSecondGliphy.onclick = pulseSecondTrashBox;
-}
-
-//Crea bote para la lista
-function crearTrash(){
-	var buttonGliphy = document.createElement("button");
-	var spanButtonGliphy = document.createElement("span");
-	spanButtonGliphy.setAttribute("class", "fa fa-trash-o");
-	buttonGliphy.appendChild(spanButtonGliphy);
-	primario.appendChild(buttonGliphy);
-	document.body.appendChild(primario);
-
-	//función remover elemento con bote de basura
-	function pulseTrashBox(){
-		primario.parentNode.removeChild(primario);
-	}
-	buttonGliphy.onclick = pulseTrashBox;
-
-
-}
-
-//Función que solo hace el titulo y el bote de basura
-function primerTitulo(){
-		tarjetaTrello();
-		crearsegundoTrash();
-		hacerInput();
-		hacerBoton()
-		ponerBoton();
-}
-
-inputBoton.onkeypress=function(e){
-	tecla=(inputBoton) ? event.keyCode : e.which;
-	if(tecla==13){
-			primerTitulo();
-  	}
-
-}
-
-
-
-function clickearBotn(){
-	hacerInput();
-	ponerBoton();
-	hacerTablero();
-	crearTrash();	
-}
-boton.onclick = clickearBotn;
-
-//On reset inservible!
-//document.getElementsByTagName("input").onreset = function() {clickearBotn()};
 	
-//Función, hacer click al botón
+	function agregarMensaje(texto, boton){
+		var padre = boton.parentElement.parentElement; 
+		var tarjeta = document.createElement("div");
+		var newItem = document.createElement("div");
+		
+		newItem.innerText = texto.value;
+		padre.insertBefore(newItem, padre.childNodes[0]);
+		newItem.classList.add("nuevalsta");
+
+		tarjeta.innerText = "Añadir una tarjeta..."
+		padre.appendChild(tarjeta);
+		tarjeta.classList.add("tarjeta2");
 
 
-/*
+		tarjeta.addEventListener("click", function(){
+			tarjeta.style.display = "none";
+			anadirTarjeta(padre);
+		});
+	}
+
+	function insertarContenedor(){
+		var nuevoCampo = document.createElement("div");
+		contenedoTarjeta.appendChild(nuevoCampo);
+
+		nuevoCampo.insertBefore(listaNueva, nuevoCampo.childNodes[0]);
+		nuevoCampo.insertBefore(formulario, nuevoCampo.childNodes[0]);
+		
+		nuevoCampo.classList.add("nuevocampo");
+		nuevoCampo.classList.add("lsta");
+
+		listaNueva.style.display = "block";
+
+		nuevoCampo.addEventListener("drop", soltar);
+		nuevoCampo.addEventListener("dragover", arrastrarSobre);
+		nuevoCampo.addEventListener("dragleave", dejaArrastrar);
+
+	}
+
+	function anadirTarjeta(padre){
+		var card = document.createElement("form");
+		var textArea = document.createElement("textarea");
+		var btnAnadir = document.createElement("button");
+
+		card.insertBefore(textArea, card.childNodes[0]);
+		card.insertBefore(btnAnadir, card.childNodes[1]);
+		padre.appendChild(card);
+
+		btnAnadir.type = "button";
+		btnAnadir.innerText = "Añadir";
+
+		card.classList.add("card");
+		textArea.classList.add("textarea");
+		btnAnadir.classList.add("boton");
+
+		textArea.focus();
+
+		btnAnadir.addEventListener("click",function(){
+			card.style.display = "none";
+			botonTarjeta(padre,textArea);
+		});
+	}
+
+	function botonTarjeta(padre,textArea){
+		var campoTarjeta = document.createElement("div");
+		campoTarjeta.innerText = textArea.value;
+		padre.insertBefore(campoTarjeta, padre.lastChild);
+
+		campoTarjeta.classList.add("tarjeta1");
+		campoTarjeta.setAttribute("id", "card.1"+i);
+		campoTarjeta.setAttribute("draggable","true");
+		padre.appendChild(campoTarjeta.previousSibling);
+		padre.lastChild.style.display = "block";
+
+		campoTarjeta.addEventListener("dragstart", arrastrar);
+		campoTarjeta.addEventListener("dragend", terminaArrastrar);
+		i++;
+
+	}
+
+
     function arrastrar(e) {
 	    e.dataTransfer.setData("text", this.id);
 	    this.style.opacity = "0.4";
@@ -144,7 +119,8 @@ boton.onclick = clickearBotn;
 	    e.preventDefault();
 	    this.style.backgroundColor = "#FF00FF";
     }
-        function soltar(e) {
+
+    function soltar(e) {
 	    var idArrastrado = e.dataTransfer.getData("text");
 	    var elementoArrastrado = document.getElementById(idArrastrado);
 	    var temporal = this.innerHTML;
@@ -155,7 +131,6 @@ boton.onclick = clickearBotn;
 
     function terminaArrastrar(e) {
 	    this.style.opacity = null;
-
     }
 
     function dejaArrastrar(e) {
@@ -163,130 +138,4 @@ boton.onclick = clickearBotn;
 	   this.classList.remove("rotateIn", "animated");
     }
 
-}; */
-
-
-//variables universales.
-var primeraCaja = document.createElement("div");
-var tarjeta = document.createElement("textarea");
-var inputBoton = document.createElement('input');
-var boton = document.createElement("button");
-var renglon = document.createElement('div');
-var titulo = document.createElement('h2');
-var primario = document.createElement('li');
-
-//función para el input
-function hacerInput(){
-
-	inputBoton.setAttribute('type', 'input');
-	var contenido = document.createElement('li');
-	contenido.appendChild(inputBoton);
-	document.body.appendChild(contenido);
-
-}
-hacerInput();
-
-//Función crear del botón
-function hacerBoton(){
-	boton.setAttribute("class", "btn");
-	boton.appendChild(document.createTextNode("Guardar"));
-}
-
-//Función para poner el botón
-
-function ponerBoton(){
-	document.body.appendChild(boton);
-}
-
-//Función primera tarjeta.
-function tarjetaTrello (){
-
-	if ( inputBoton.value === "" ||  inputBoton.value === null) {
-		alert("No se agrego nada");
-	} else{
-		//Aquí se le da la clase renglón al div
-		renglon.setAttribute('class', 'row');
-		//Aquí el div se convierte en hijo de lista
-		titulo.appendChild(renglon);
-		//Aquí se crea el texto como hijo de lista
-		titulo.appendChild(document.createTextNode(inputBoton.value));
-		//Aquí se da ubicación de lista
-		document.body.appendChild(titulo);
-	}
-}	
-
-
-
-function hacerTablero(){
-
-	//Aquí el div se convierte en hijo de lista
-	primario.appendChild(renglon);
-	//Aquí se crea el texto como hijo de lista
-	primario.appendChild(document.createTextNode(inputBoton.value));
-	//Aquí se da ubicación de lista
-	document.body.appendChild(primario);
-}
-
-
-
-
-function crearsegundoTrash(){
-	var buttonSecondGliphy = document.createElement("button");
-	var spanButtonSecondGliphy = document.createElement("span");
-	spanButtonSecondGliphy.setAttribute("class", "fa fa-trash-o");
-	buttonSecondGliphy.appendChild(spanButtonSecondGliphy);
-	titulo.appendChild(buttonSecondGliphy);
-	document.body.appendChild(titulo);
-
-
-	//función remover elemento con bote de basura
-	function pulseSecondTrashBox(){
-		titulo.parentNode.removeChild(titulo);
-	}
-	buttonSecondGliphy.onclick = pulseSecondTrashBox;
-}
-
-//Crea bote para la lista
-function crearTrash(){
-	var buttonGliphy = document.createElement("button");
-	var spanButtonGliphy = document.createElement("span");
-	spanButtonGliphy.setAttribute("class", "fa fa-trash-o");
-	buttonGliphy.appendChild(spanButtonGliphy);
-	primario.appendChild(buttonGliphy);
-	document.body.appendChild(primario);
-
-	//función remover elemento con bote de basura
-	function pulseTrashBox(){
-		primario.parentNode.removeChild(primario);
-	}
-	buttonGliphy.onclick = pulseTrashBox;
-
-
-}
-
-//Función que solo hace el titulo y el bote de basura
-function primerTitulo(){
-		tarjetaTrello();
-		crearsegundoTrash();
-		hacerInput();
-		hacerBoton()
-		ponerBoton();
-}
-
-inputBoton.onkeypress=function(e){
-	tecla=(inputBoton) ? event.keyCode : e.which;
-	if(tecla==13){
-			primerTitulo();
-  	}
-
-}
-
-
-
-function clickearBotn(){
-	hacerInput();
-	ponerBoton();
-	hacerTablero();
-	crearTrash();	
-}
-boton.onclick = clickearBotn;
+});
